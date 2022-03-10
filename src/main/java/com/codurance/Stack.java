@@ -4,30 +4,26 @@ import static java.lang.System.arraycopy;
 public class Stack {
 
     private int capacity;
+    private int size = 0;
+    private int[] elements;
 
     public static Stack Make(int capacity) {
         return new Stack(capacity);
     }
-
     private Stack(int capacity) {
         this.capacity = capacity;
+        this.elements = new int[0];
     }
-    private int size = 0;
-
-    private int[] elements = new int[0];
 
     public boolean isEmpty() {
         return size == 0;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public void push(int element) {
         if (size == capacity) {
             throw new Overflow();
         }
+
         if (size >= elements.length) {
             increaseSize();
         }
