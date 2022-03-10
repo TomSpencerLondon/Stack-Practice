@@ -13,7 +13,7 @@ public class StackTest {
 
     @BeforeEach
     void setUp() {
-        stack = Stack.Make(2);
+        stack = BoundedStack.Make(2);
     }
 
     @Test
@@ -69,6 +69,19 @@ public class StackTest {
     void whenPushedPastLimit_StackOverflows() {
         stack.push(1);
         stack.push(1);
+        assertThatThrownBy(() -> stack.push(1))
+                .isInstanceOf(Overflow.class);
+    }
+
+    @Test
+    void stackWithNegativeSizeShouldThrowIllegalCapacity() {
+        assertThatThrownBy(() -> BoundedStack.Make(-1))
+                .isInstanceOf(IllegalCapacity.class);
+    }
+
+    @Test
+    void whenCreatingStackWithZeroCapacity_AnyPushShouldOverflow() {
+        Stack stack = BoundedStack.Make(0);
         assertThatThrownBy(() -> stack.push(1))
                 .isInstanceOf(Overflow.class);
     }
