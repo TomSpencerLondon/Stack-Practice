@@ -24,7 +24,7 @@ public class BoundedStack implements Stack {
         this.elements = new int[capacity];
     }
 
-    public void increaseSize() {
+    private void increaseSize() {
         int[] newElements = new int[size + 1];
         arraycopy(elements, 0, newElements, 0, size);
         elements = newElements;
@@ -55,5 +55,24 @@ public class BoundedStack implements Stack {
         }
 
         return elements[--size];
+    }
+
+    @Override
+    public int top() {
+        if (isEmpty()) {
+            throw new Empty();
+        }
+        return elements[size-1];
+    }
+
+    @Override
+    public Integer find(int element) {
+        for (int i = size - 1; i>= 0; i--) {
+            if (elements[i] == element) {
+                return (size - 1) - i;
+            }
+        }
+
+        return null;
     }
 }

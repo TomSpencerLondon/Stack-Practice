@@ -85,4 +85,42 @@ public class StackTest {
         assertThatThrownBy(() -> stack.push(1))
                 .isInstanceOf(Overflow.class);
     }
+
+    @Test
+    void whenOneIsPushed_OneIsOnTop() {
+        stack.push(1);
+
+        assertThat(stack.top())
+                .isEqualTo(1);
+    }
+
+
+    @Test
+    void whenStackIsEmpty_TopThrowsEmpty() {
+        Stack stack = BoundedStack.Make(2);
+        assertThatThrownBy(() -> stack.top())
+                .isInstanceOf(Empty.class);
+    }
+
+    @Test
+    void whenZeroCapacity_TopThrowsEmpty() {
+        Stack stack = BoundedStack.Make(0);
+        assertThatThrownBy(() -> stack.top())
+                .isInstanceOf(Empty.class);
+    }
+
+    @Test
+    void givenStackWithOneTwoPushed_FindOne() {
+        stack.push(1);
+        stack.push(2);
+        assertThat(stack.find(1))
+                .isEqualTo(1);
+        assertThat(stack.find(2))
+                .isZero();
+    }
+
+    @Test
+    void givenStackWithNo2_find2ShouldReturnNull() {
+        assertNull(stack.find(2));
+    }
 }

@@ -15,4 +15,14 @@ public class ZeroCapacityStack implements Stack {
     public int pop() {
         throw new Underflow();
     }
+
+    @Override
+    public int top() {
+        throw new Empty();
+    }
+
+    @Override
+    public Integer find(int element) {
+        return null;
+    }
 }
