@@ -3,7 +3,17 @@ import static java.lang.System.arraycopy;
 
 public class Stack {
 
+    private int capacity;
+
+    public static Stack Make(int capacity) {
+        return new Stack(capacity);
+    }
+
+    private Stack(int capacity) {
+        this.capacity = capacity;
+    }
     private int size = 0;
+
     private int[] elements = new int[0];
 
     public boolean isEmpty() {
@@ -15,6 +25,9 @@ public class Stack {
     }
 
     public void push(int element) {
+        if (size == capacity) {
+            throw new Overflow();
+        }
         if (size >= elements.length) {
             increaseSize();
         }

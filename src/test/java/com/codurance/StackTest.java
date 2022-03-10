@@ -13,7 +13,7 @@ public class StackTest {
 
     @BeforeEach
     void setUp() {
-        stack = new Stack();
+        stack = Stack.Make(2);
     }
 
     @Test
@@ -63,5 +63,13 @@ public class StackTest {
         stack.push(42);
         assertEquals(42, stack.pop());
         assertEquals(23, stack.pop());
+    }
+
+    @Test
+    void whenPushedPastLimit_StackOverflows() {
+        stack.push(1);
+        stack.push(1);
+        assertThatThrownBy(() -> stack.push(1))
+                .isInstanceOf(Overflow.class);
     }
 }
